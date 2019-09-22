@@ -1,0 +1,15 @@
+{
+  "name": "skill-sharing-website",
+  "version": "1.0.0",
+  "description": "Skill Sharing Website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "YosepRA",
+  "license": "ISC",
+  "dependencies": {
+    "ecstatic": "^4.1.2"
+  }
+}

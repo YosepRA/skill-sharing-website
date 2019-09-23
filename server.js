@@ -1,4 +1,5 @@
 const { createServer } = require('http');
+const { readFile } = require('fs').promises;
 const Router = require('./router');
 const ecstatic = require('ecstatic');
 
@@ -179,6 +180,22 @@ SkillShareServer.prototype.updated = function() {
   this.waiting.forEach(resolve => resolve(response));
   this.waiting = [];
 };
+
+/* ======================================================================================================== */
+
+// EXERCISE
+
+// DISK PERSISTENCE
+
+// Note:
+// 1. A way to load data file when the server first loaded up or whenever the code needs to retrieve it.
+// 2. A way to save data file whenever a change occur.
+
+// Retrieving data from file system and return it as an object.
+async function retrieveJSON(path) {
+  let data = await readFile(path, 'utf-8');
+  return JSON.parse(data);
+}
 
 /* ======================================================================================================== */
 

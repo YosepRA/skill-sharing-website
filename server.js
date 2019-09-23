@@ -1,4 +1,5 @@
 const { createServer } = require('http');
+const { readFile, writeFile } = require('fs').promises;
 const Router = require('./router');
 const ecstatic = require('ecstatic');
 
@@ -128,11 +129,6 @@ router.add('POST', commentPath, async (server, title, request) => {
 // "talkResponse" will handle the normal GET request to "/talks" and returns a JSON array of talks.
 SkillShareServer.prototype.talkResponse = function() {
   let talks = Object.values(this.talks);
-  // let talks = [];
-  // console.log('talkResponse');
-  // for (const title of this.talks) {
-  //   talks.push(this.talks[title]);
-  // }
   return {
     body: JSON.stringify(talks),
     headers: {
@@ -174,8 +170,29 @@ SkillShareServer.prototype.updated = function() {
   let response = this.talkResponse();
   this.waiting.forEach(resolve => resolve(response));
   this.waiting = [];
+
+  // Add a functionality to save data in the disk.
+  writeFile('./public/data.json', JSON.stringify(this.talks)).catch(console.log);
 };
 
 /* ======================================================================================================== */
 
-new SkillShareServer(Object.create(null)).start(8000);
+// EXERCISE
+
+// DISK PERSISTENCE
+
+// Note:
+// 1. A way to load data file when the server first loaded up or whenever the code needs to retrieve it.
+// 2. A way to save data file whenever a change occur.
+
+// Retrieving data from file system and return it as an object.
+async function retrieveJSON(path) {
+  let data = await readFile(path, 'utf-8');
+  return JSON.parse(data);
+}
+
+/* ======================================================================================================== */
+
+retrieveJSON('./public/data.json')
+  .then(talks => new SkillShareServer(talks).start(8000))
+  .catch(_ => new SkillShareServer(Object.create(null)).start(8000));

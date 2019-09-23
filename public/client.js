@@ -36,8 +36,7 @@ function fetchOK(url, options) {
 }
 
 function talkURL(title) {
-  // console.log(`/talks/${encodeURIComponent(title)}`);
-  return `talks/${encodeURIComponent(title)}`;
+  return `/talks/${encodeURIComponent(title)}`;
 }
 
 function reportError(error) {
@@ -155,7 +154,6 @@ async function pollTalks(update) {
           Prefer: 'wait=90'
         }
       });
-      console.log('TCL: pollTalks -> tag', tag);
     } catch (err) {
       console.log(`Request failed: ${err}`);
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -163,7 +161,6 @@ async function pollTalks(update) {
     }
     if (response.status === 304) continue;
     tag = response.headers.get('ETag');
-    // console.log('TCL: pollTalks -> tag', tag);
     // Update the client's state with parsed JSON data.
     update(await response.json());
   }

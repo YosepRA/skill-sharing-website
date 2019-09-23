@@ -100,7 +100,7 @@ router.add('PUT', talkPath, async (server, title, request) => {
   return { status: 204 };
 });
 
-const commentPath = /^\/talks\/([^/])+\/comments$/;
+const commentPath = /^\/talks\/([^/]+)\/comments$/;
 
 router.add('POST', commentPath, async (server, title, request) => {
   let requestBody = await readStream(request);

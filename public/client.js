@@ -108,7 +108,14 @@ function renderTalk(talk, dispatch) {
           form.reset();
         }
       },
-      elt('input', { type: 'text', name: 'comment' }),
+      elt('input', {
+        type: 'text',
+        name: 'comment',
+        value: JSON.parse(localStorage.getItem(talk.title)),
+        oninput(event) {
+          localStorage.setItem(talk.title, JSON.stringify(event.target.value));
+        }
+      }),
       ' ',
       elt('button', { type: 'submit' }, 'Add Comment')
     )
@@ -214,3 +221,23 @@ function runApp() {
 }
 
 runApp();
+
+/* ======================================================================================================== */
+
+// EXERCISE
+
+// COMMENT FIELD RESET
+// → Whenever new data comes in, the app will redraw all its DOM elements.
+// The problem occur when user is typing inputs on form, and if new data comes in, it will reset its value.
+
+// SOLUTION
+// → Saving to localStorage as the user types in using talk's title as its key to distinguish one talk ~
+// ~ to the other. And setting comment field's value to what is lately stored into the storage.
+// elt('input', {
+//   type: 'text',
+//   name: 'comment',
+//   value: JSON.parse(localStorage.getItem(talk.title)),
+//   oninput(event) {
+//     localStorage.setItem(talk.title, JSON.stringify(event.target.value));
+//   }
+// });

@@ -10,6 +10,6 @@
   "author": "YosepRA",
   "license": "ISC",
   "dependencies": {
-    "ecstatic": "^4.1.2"
+    "ecstatic": "^4.1.4"
   }
 }
